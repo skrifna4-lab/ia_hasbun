@@ -1,4 +1,3 @@
-version: '3.8'
 services:
   llama-server:
     image: ghcr.io/ggml-org/llama.cpp:server
@@ -9,5 +8,13 @@ services:
     deploy:
       resources:
         limits:
-          memory: 1536M # Esto evita que tu VPS se bloquee
-    command: ["--hf", "bartowski/Llama-3.2-1B-Instruct-GGUF", "--host", "0.0.0.0", "--port", "8080"]
+          memory: 1536M
+    # Cambiamos --hf por --model-url para evitar el error de comando inválido
+    command: 
+      - "--model-url"
+      - "https://huggingface.co/bartowski/Llama-3.2-1B-Instruct-GGUF/resolve/main/Llama-3.2-1B-Instruct-Q4_K_M.gguf"
+      - "--host"
+      - "0.0.0.0"
+      - "--port"
+      - "8080"
+    restart: always
