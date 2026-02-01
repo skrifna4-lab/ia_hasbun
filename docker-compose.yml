@@ -1,0 +1,13 @@
+version: '3.8'
+services:
+  llama-server:
+    image: ghcr.io/ggml-org/llama.cpp:server
+    ports:
+      - "8080:8080"
+    environment:
+      - MEM_LOCK=0
+    deploy:
+      resources:
+        limits:
+          memory: 1536M # Esto evita que tu VPS se bloquee
+    command: ["--hf", "bartowski/Llama-3.2-1B-Instruct-GGUF", "--host", "0.0.0.0", "--port", "8080"]
